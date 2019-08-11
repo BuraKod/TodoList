@@ -41,9 +41,9 @@ public class LoginActivity extends BaseActivity {
     private void SignIn(Object object) {
         if (object instanceof String) {
             String username = object.toString();
-            Intent returnIntent = new Intent(LoginActivity.this,MainActivity.class);
-            returnIntent.putExtra("username",username);
-            startActivity(returnIntent);
+            Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+            intent.putExtra("username", username);
+            startActivity(intent);
         }
     }
 
