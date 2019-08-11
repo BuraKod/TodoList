@@ -10,25 +10,44 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "todo_list",foreignKeys = @ForeignKey(entity = Users.class,parentColumns = "username",childColumns = "user",onDelete = 1))
 public class TodoList {
 
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    public final int id;
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     @NonNull
     public String getTitle() {
         return title;
     }
 
-    @NonNull
-    @ColumnInfo(name = "title")
-    public final String title;
-
-    public final String user;
-
-
-    public TodoList(int id, @NonNull String title, String user) {
-        this.id = id;
+    public void setTitle(@NonNull String title) {
         this.title = title;
+    }
+
+    @NonNull
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(@NonNull String user) {
         this.user = user;
     }
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private  int id;
+
+    @NonNull
+    @ColumnInfo(name = "title")
+    private  String title;
+
+
+    @NonNull
+    @ColumnInfo(name = "user")
+    private  String user;
+
+
 }
