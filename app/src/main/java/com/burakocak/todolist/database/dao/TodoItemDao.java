@@ -6,6 +6,7 @@ import androidx.room.Delete;
 import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
+import androidx.room.Update;
 
 import com.burakocak.todolist.model.TodoItem;
 import com.burakocak.todolist.model.TodoList;
@@ -23,4 +24,7 @@ public interface TodoItemDao {
 
     @Delete
     void delete(TodoItem todoItem);
+
+    @Update
+    void update(TodoItem todoItem);
 }

@@ -25,8 +25,9 @@
         android:textStyle="bold"
         android:textSize="16sp"
         android:ellipsize="end"
+        android:maxEms="10"
+        app:layout_constraintRight_toLeftOf="@id/ll_todo_items"
         android:lines = "1"
-        android:ems = "8"
         tools:text="@tools:sample/lorem/random" />
 
         <TextView
@@ -57,24 +58,28 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:layout_constraintRight_toRightOf="parent"
                 android:src="@android:drawable/ic_menu_delete"
-                android:padding="8dp" />
+                android:layout_gravity="right"
+                android:padding="12dp" />
 
             <ImageView
                 android:id="@+id/iv_todo_item_status"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:src="@android:drawable/ic_delete"
-                app:layout_constraintRight_toRightOf="parent"
+                android:src="@drawable/ic_close"
+                android:layout_gravity="right"
                 app:layout_constraintTop_toBottomOf="@id/iv_delete_item"
-                android:padding="8dp" />
+                android:paddingBottom="16dp"
+                android:paddingRight="16dp"
+                android:paddingLeft="16dp"/>
 
             <TextView
                 android:id="@+id/tv_todo_item_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textStyle="bold"
+                android:paddingRight="8dp"
+                android:layout_gravity="right"
                 app:layout_constraintTop_toBottomOf="@id/iv_todo_item_status"
                 tools:text="@tools:sample/date/mmddyy" />
 
