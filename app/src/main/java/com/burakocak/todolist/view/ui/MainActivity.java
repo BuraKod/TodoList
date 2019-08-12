@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.view.View;
 
 
+import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -21,6 +22,8 @@ import com.burakocak.todolist.viewmodel.MainViewModel;
 
 import java.util.List;
 import java.util.Random;
+
+import static com.burakocak.todolist.utils.Constants.ADD_TODO_REQUEST;
 
 public class MainActivity extends BaseActivity implements TodoListAdapter.OnDeleteButtonClickListener{
 
@@ -70,7 +73,9 @@ public class MainActivity extends BaseActivity implements TodoListAdapter.OnDele
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_add_todo:
-                    addTodotest();
+                    //addTodotest();
+                    startActivityForResult(new Intent(MainActivity.this,AddTodoActivity.class),ADD_TODO_REQUEST);
+                    Intent intent = new Intent(MainActivity.this,AddTodoActivity.class);
             }
         }
     };
@@ -83,6 +88,20 @@ public class MainActivity extends BaseActivity implements TodoListAdapter.OnDele
     @Override
     public void onCustomEvent(EventbusObject eventbusObject) {
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        if (requestCode == ADD_TODO_REQUEST && resultCode == RESULT_OK) {
+            String title = data.getStringExtra(AddTodoActivity.TODO_TITLE);
+            TodoList todoList = new TodoList();
+            todoList.setTitle(title);
+            todoList.setUser(username);
+            mainViewModel.addTodo(todoList);
+            showSuccessSneaker("Save!","New todo is add to do list");
+        } else {
+            showErrorSneaker("Not Save!!","New todo is not saved!!");
+        }
     }
 
     @Override
