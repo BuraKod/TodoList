@@ -12,15 +12,19 @@ import com.burakocak.todolist.database.dao.TodoDao;
 import com.burakocak.todolist.model.TodoList;
 
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
 
 public class MainViewModel extends AndroidViewModel {
     private TodoDao todoDao;
     private LiveData<List<TodoList>> allTodo;
+    private ExecutorService executorService;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
         TodoDatabase todoDatabase = TodoDatabase.getDatabase(application);
         todoDao = todoDatabase.todoDao();
+        executorService = Executors.newSingleThreadExecutor();
     }
 
     public void setAllTodo(String username){
@@ -35,6 +39,9 @@ public class MainViewModel extends AndroidViewModel {
         new InsertTodoAsyncTask(todoDao).execute(todoList);
     }
 
+   public void deleteTodo(TodoList list) {
+        executorService.execute(() -> todoDao.delete(list));
+    }
 
     private static class InsertTodoAsyncTask extends AsyncTask <TodoList,Void,Void> {
         TodoDao todoDao;

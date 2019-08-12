@@ -22,7 +22,7 @@ import com.burakocak.todolist.viewmodel.MainViewModel;
 import java.util.List;
 import java.util.Random;
 
-public class MainActivity extends BaseActivity {
+public class MainActivity extends BaseActivity implements TodoListAdapter.OnDeleteButtonClickListener{
 
     private static final String TAG = "MainActivity";
     private MainViewModel mainViewModel;
@@ -60,7 +60,7 @@ public class MainActivity extends BaseActivity {
     private void init() {
         binding.rvTodoList.setLayoutManager(new LinearLayoutManager(this));
         binding.rvTodoList.setHasFixedSize(true);
-        todoListAdapter  =  new TodoListAdapter();
+        todoListAdapter  =  new TodoListAdapter(this, this);
         binding.rvTodoList.setAdapter(todoListAdapter);
     }
 
@@ -71,7 +71,6 @@ public class MainActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.btn_add_todo:
                     addTodotest();
-                    mainViewModel.getAllTodo();
             }
         }
     };
@@ -84,5 +83,10 @@ public class MainActivity extends BaseActivity {
     @Override
     public void onCustomEvent(EventbusObject eventbusObject) {
 
+    }
+
+    @Override
+    public void onDeleteButtonClicked(TodoList todoList) {
+        mainViewModel.deleteTodo(todoList);
     }
 }
