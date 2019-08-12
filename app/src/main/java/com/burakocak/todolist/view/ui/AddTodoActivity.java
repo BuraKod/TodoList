@@ -1,6 +1,5 @@
 package com.burakocak.todolist.view.ui;
 
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.DataBindingUtil;
 
 import android.content.Intent;

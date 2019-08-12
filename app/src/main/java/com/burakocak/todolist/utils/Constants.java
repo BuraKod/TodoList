@@ -7,6 +7,5 @@ public class Constants {
     public static int HIDE_LOADING = 1006;
     public static final int RESULT_OK = 200;
     public static final int RESULT_NO = 400;
-    public static final int LOGIN = 2000;
     public static final int ADD_TODO_REQUEST=1;
 }

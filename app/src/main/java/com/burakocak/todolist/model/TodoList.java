@@ -7,7 +7,8 @@ import androidx.room.Entity;
 import androidx.room.ForeignKey;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "todo_list",foreignKeys = @ForeignKey(entity = Users.class,parentColumns = "username",childColumns = "user",onDelete = 1))
+
+@Entity(tableName = "todo_list",foreignKeys = @ForeignKey(entity = Users.class,parentColumns = "username",childColumns = "user",onDelete = ForeignKey.CASCADE))
 public class TodoList {
 
     public int getId() {

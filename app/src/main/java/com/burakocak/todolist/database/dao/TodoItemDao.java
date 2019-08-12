@@ -7,23 +7,20 @@ import androidx.room.Insert;
 import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 
+import com.burakocak.todolist.model.TodoItem;
 import com.burakocak.todolist.model.TodoList;
-
 
 import java.util.List;
 
 @Dao
-public interface TodoDao {
+public interface TodoItemDao {
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    void insertTodo(TodoList todoList);
+    void insertTodoItem(TodoItem todoItem);
 
-    @Query("select * from todo_list where user = :username")
-    LiveData<List<TodoList>> getTodo(String username);
+    @Query("select * from todo_items where todoId = :todoId ")
+    LiveData<List<TodoItem>> getTodoItems(int todoId);
 
-    @Query("delete from todo_list where id = :id")
-    void deleteByTodoId(int id);
-
-    @Delete()
-    void delete(TodoList todoList);
+    @Delete
+    void delete(TodoItem todoItem);
 }

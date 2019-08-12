@@ -27,7 +27,7 @@ public class MainViewModel extends AndroidViewModel {
         executorService = Executors.newSingleThreadExecutor();
     }
 
-    public void setAllTodo(String username){
+    public void setAllTodo(String username) {
         allTodo = todoDao.getTodo(username);
     }
 
@@ -35,15 +35,16 @@ public class MainViewModel extends AndroidViewModel {
         return allTodo;
     }
 
+
     public void addTodo(TodoList todoList) {
         new InsertTodoAsyncTask(todoDao).execute(todoList);
     }
 
-   public void deleteTodo(TodoList list) {
+    public void deleteTodo(TodoList list) {
         executorService.execute(() -> todoDao.delete(list));
     }
 
-    private static class InsertTodoAsyncTask extends AsyncTask <TodoList,Void,Void> {
+    private static class InsertTodoAsyncTask extends AsyncTask<TodoList, Void, Void> {
         TodoDao todoDao;
 
         private InsertTodoAsyncTask(TodoDao todoDao) {

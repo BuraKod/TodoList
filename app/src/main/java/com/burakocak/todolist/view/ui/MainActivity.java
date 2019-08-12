@@ -10,7 +10,6 @@ import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.burakocak.todolist.R;
 import com.burakocak.todolist.databinding.ActivityMainBinding;
@@ -20,8 +19,6 @@ import com.burakocak.todolist.view.adapter.TodoListAdapter;
 import com.burakocak.todolist.view.base.BaseActivity;
 import com.burakocak.todolist.viewmodel.MainViewModel;
 
-import java.util.List;
-import java.util.Random;
 
 import static com.burakocak.todolist.utils.Constants.ADD_TODO_REQUEST;
 
@@ -40,24 +37,10 @@ public class MainActivity extends BaseActivity implements TodoListAdapter.OnDele
         mainViewModel = ViewModelProviders.of(MainActivity.this).get(MainViewModel.class);
         username  = getIntent().getStringExtra("username");
         mainViewModel.setAllTodo(username);
-        mainViewModel.getAllTodo().observe(this, new Observer<List<TodoList>>() {
-            @Override
-            public void onChanged(List<TodoList> todoLists) {
-                todoListAdapter.setTodo(todoLists);
-            }
-        });
+        mainViewModel.getAllTodo().observe(this, todoLists -> todoListAdapter.setTodo(todoLists));
         init();
         binding.btnAddTodo.setOnClickListener(clickListener);
 
-    }
-
-    public void addTodotest(){
-        TodoList todoList =  new TodoList();
-        Random r = new Random();
-        int a = r.nextInt();
-        todoList.setTitle("TODO LIST"+a);
-        todoList.setUser(username);
-        mainViewModel.addTodo(todoList);
     }
 
     private void init() {
@@ -73,9 +56,7 @@ public class MainActivity extends BaseActivity implements TodoListAdapter.OnDele
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_add_todo:
-                    //addTodotest();
                     startActivityForResult(new Intent(MainActivity.this,AddTodoActivity.class),ADD_TODO_REQUEST);
-                    Intent intent = new Intent(MainActivity.this,AddTodoActivity.class);
             }
         }
     };
