@@ -44,4 +44,9 @@ public class TodoListItemViewModel extends AndroidViewModel {
     public void deleteTodoItem(TodoItem todoItem) {
         executorService.execute(() -> todoItemDao.delete(todoItem));
     }
+
+    public void updateTodoItem(TodoItem todoItem) {
+        executorService.execute(() -> todoItemDao.update(todoItem));
+    }
+
 }
