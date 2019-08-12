@@ -11,6 +11,20 @@ import androidx.room.PrimaryKey;
 @Entity(tableName = "todo_list",foreignKeys = @ForeignKey(entity = Users.class,parentColumns = "username",childColumns = "user",onDelete = ForeignKey.CASCADE))
 public class TodoList {
 
+
+    @PrimaryKey(autoGenerate = true)
+    @ColumnInfo(name = "id")
+    private  int id;
+
+    @NonNull
+    @ColumnInfo(name = "title")
+    private  String title;
+
+
+    @NonNull
+    @ColumnInfo(name = "user")
+    private  String user;
+
     public int getId() {
         return id;
     }
@@ -36,19 +50,5 @@ public class TodoList {
     public void setUser(@NonNull String user) {
         this.user = user;
     }
-
-    @PrimaryKey(autoGenerate = true)
-    @ColumnInfo(name = "id")
-    private  int id;
-
-    @NonNull
-    @ColumnInfo(name = "title")
-    private  String title;
-
-
-    @NonNull
-    @ColumnInfo(name = "user")
-    private  String user;
-
 
 }
