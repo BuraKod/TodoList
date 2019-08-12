@@ -23,7 +23,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:hint="New Todo Item Name"
+                android:hint="@string/new_todo_item_name"
                 android:imeOptions="actionNext"
                 android:padding="24dp"
                 android:singleLine="true" />
@@ -44,7 +44,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:hint="New Todo Item Description"
+                android:hint="@string/new_todo_item_description"
                 android:imeOptions="actionDone"
                 android:padding="24dp"
                 android:singleLine="true" />

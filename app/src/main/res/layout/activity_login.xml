@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    android:hint="Username"
+                    android:hint="@string/username"
                     android:imeOptions="actionNext"
                     android:padding="24dp"
                     android:singleLine="true" />
@@ -60,7 +60,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="24dp"
                     android:layout_marginEnd="24dp"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:imeOptions="actionDone"
                     android:inputType="textPassword"
                     android:padding="24dp"
@@ -86,7 +86,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/bg_register_button"
-                android:text="Register" />
+                android:text="@string/register" />
 
             <Button
                 android:id="@+id/btn_login"
@@ -94,7 +94,7 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:background="@drawable/bg_login_button"
-                android:text="Login" />
+                android:text="@string/login" />
 
         </LinearLayout>
 

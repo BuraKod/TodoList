@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Todo List</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="register">Register</string>
+    <string name="login">Login</string>
+    <string name="new_todo_item_description">New Todo Item Description</string>
+    <string name="new_todo_item_name">New Todo Item Name</string>
+    <string name="new_todo_name">New Todo Name</string>
+    <string name="save">Save</string>
 </resources>

@@ -22,7 +22,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="24dp"
                 android:layout_marginEnd="24dp"
-                android:hint="New Todo Name"
+                android:hint="@string/new_todo_name"
                 android:imeOptions="actionDone"
                 android:padding="24dp"
                 android:singleLine="true" />
