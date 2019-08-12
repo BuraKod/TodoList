@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".view.ui.TodoListItemActivity"></activity>
+        <activity android:name=".view.ui.AddTodoItemActivity" android:parentActivityName=".view.ui.TodoListItemActivity"></activity>
+        <activity android:name=".view.ui.TodoListItemActivity" android:launchMode="singleTop" />
         <activity
             android:name=".view.ui.AddTodoActivity"
             android:parentActivityName=".view.ui.MainActivity" />

@@ -28,6 +28,10 @@ public class TodoItem {
     @ColumnInfo(name = "todoId")
     private int todoId;
 
+    @NonNull
+    @ColumnInfo(name ="isCompleted")
+    private boolean isCompleted;
+
 
     public int getTodoId() {
         return todoId;
@@ -70,4 +74,13 @@ public class TodoItem {
     public void setExpiredDate(@NonNull String expiredDate) {
         this.expiredDate = expiredDate;
     }
+
+    public boolean isCompleted() {
+        return isCompleted;
+    }
+
+    public void setCompleted(boolean completed) {
+        isCompleted = completed;
+    }
+
 }
