@@ -1,12 +1,17 @@
 package com.burakocak.todolist.view.ui;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.widget.SearchView;
+import androidx.core.view.MenuItemCompat;
 import androidx.databinding.DataBindingUtil;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.burakocak.todolist.R;
@@ -15,12 +20,13 @@ import com.burakocak.todolist.model.EventbusObject;
 import com.burakocak.todolist.model.TodoItem;
 import com.burakocak.todolist.view.adapter.TodoListItemAdapter;
 import com.burakocak.todolist.view.base.BaseActivity;
+import com.burakocak.todolist.view.callback.OnRecyclerItemClickListener;
 import com.burakocak.todolist.viewmodel.TodoListItemViewModel;
 
 import static com.burakocak.todolist.utils.Constants.ADD_TODO_REQUEST;
 
 
-public class TodoListItemActivity extends BaseActivity implements TodoListItemAdapter.OnDeleteButtonItemClickListener {
+public class TodoListItemActivity extends BaseActivity implements OnRecyclerItemClickListener {
 
     private ActivityTodoListItemBinding binding;
     private TodoListItemViewModel viewModel;
@@ -37,6 +43,19 @@ public class TodoListItemActivity extends BaseActivity implements TodoListItemAd
         viewModel = ViewModelProviders.of(TodoListItemActivity.this).get(TodoListItemViewModel.class);
         viewModel.setAllTodoItems(todoId);
         viewModel.getAllTodoItems().observe(this, todoItems -> todoListItemAdapter.setTodoItem(todoItems));
+        binding.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                todoListItemAdapter.getFilter().filter(query);
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                todoListItemAdapter.getFilter().filter(newText);
+                return false;
+            }
+        });
         assert getSupportActionBar() != null;
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setTitle("TODO: "+todoName);
@@ -57,12 +76,6 @@ public class TodoListItemActivity extends BaseActivity implements TodoListItemAd
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.btn_add_todo_item:
-                    /*TodoItem todoItem = new TodoItem();
-                    todoItem.setTitle("Test Title");
-                    todoItem.setDesc("Test title Test title Test title v v Test title Test title Test title");
-                    todoItem.setExpiredDate("12/12/2019");
-                    todoItem.setTodoId(todoId);
-                    viewModel.addTodoItem(todoItem);*/
                     startActivityForResult(new Intent(TodoListItemActivity.this,AddTodoItemActivity.class),ADD_TODO_REQUEST);
             }
         }
@@ -78,6 +91,8 @@ public class TodoListItemActivity extends BaseActivity implements TodoListItemAd
     public void onCustomEvent(EventbusObject eventbusObject) {
 
     }
+
+
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -98,8 +113,23 @@ public class TodoListItemActivity extends BaseActivity implements TodoListItemAd
         }
     }
 
+
     @Override
-    public void onDeleteButtonItemClicked(TodoItem todoItem) {
-        viewModel.deleteTodoItem(todoItem);
+    public void onDeleteClick(Object object) {
+        viewModel.deleteTodoItem((TodoItem) object);
+    }
+
+    @Override
+    public void onCompleteClick(Object object) {
+        TodoItem todoItem = (TodoItem) object;
+        if (todoItem.isCompleted()){
+            todoItem.setCompleted(false);
+            showErrorSneaker("Not Completed!!","Todo item is not completed");
+        }
+        else {
+            todoItem.setCompleted(true);
+            showSuccessSneaker("Completed!!","Todo item is completed");
+        }
+        viewModel.updateTodoItem(todoItem);
     }
 }
