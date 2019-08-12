@@ -19,11 +19,15 @@
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintRight_toLeftOf="@id/ll_todo_items"
-        android:textAppearance="@style/TextAppearance.AppCompat.Large"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
+        android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+        android:textStyle="bold"
+        android:textSize="16sp"
         android:ellipsize="end"
-        android:lines="1"
-        tools:text="@tools:sample/lorem" />
+        android:lines = "1"
+        android:ems = "8"
+        tools:text="@tools:sample/lorem/random" />
 
         <TextView
             android:id="@+id/tv_todo_item_desc"
@@ -32,6 +36,7 @@
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
             android:layout_marginBottom="8dp"
+            android:textAppearance="@style/TextAppearance.AppCompat.Medium"
             android:maxLines="4"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@id/ll_todo_items"
