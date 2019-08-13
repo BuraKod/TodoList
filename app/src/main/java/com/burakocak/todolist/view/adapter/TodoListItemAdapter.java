@@ -32,14 +32,14 @@ public class TodoListItemAdapter extends RecyclerView.Adapter<TodoListItemAdapte
         this.todoItemLists = new ArrayList<>();
         this.onRecyclerItemClickListener = listener;
         this.context = context;
-        this.filteredTodoItemList=todoItemLists;
+        this.filteredTodoItemList = todoItemLists;
         this.layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
 
     @NonNull
     @Override
     public TodoListItemHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View itemView = layoutInflater.inflate(R.layout.todo_list_items,parent,false);
+        View itemView = layoutInflater.inflate(R.layout.todo_list_items, parent, false);
         return new TodoListItemHolder(itemView);
     }
 
@@ -90,7 +90,9 @@ public class TodoListItemAdapter extends RecyclerView.Adapter<TodoListItemAdapte
                 } else {
                     List<TodoItem> filteredList = new ArrayList<>();
                     for (TodoItem todoItem : todoItemLists) {
-                        if (todoItem.getTitle().toLowerCase().contains(charSequenceString.toLowerCase())) {
+                        if (todoItem.getTitle().toLowerCase().contains(charSequenceString.toLowerCase())
+                                || todoItem.getDesc().toLowerCase().contains(charSequenceString.toLowerCase())
+                                || todoItem.getExpiredDate().toLowerCase().contains(charSequenceString.toLowerCase())) {
                             filteredList.add(todoItem);
                         }
                         filteredTodoItemList = filteredList;
@@ -112,9 +114,9 @@ public class TodoListItemAdapter extends RecyclerView.Adapter<TodoListItemAdapte
     }
 
 
-    public class TodoListItemHolder extends RecyclerView.ViewHolder{
-        private TextView tvItemTitle,tvItemDesc,tvItemDate;
-        private ImageView ivDeleteItem,ivCompleteItem;
+    public class TodoListItemHolder extends RecyclerView.ViewHolder {
+        private TextView tvItemTitle, tvItemDesc, tvItemDate;
+        private ImageView ivDeleteItem, ivCompleteItem;
         private boolean isComplete;
 
         private TodoListItemHolder(@NonNull View itemView) {
