@@ -15,28 +15,28 @@ import com.burakocak.todolist.utils.Constants;
 
 import org.greenrobot.eventbus.EventBus;
 
-import java.util.List;
 
 
 public class LoginViewModel extends AndroidViewModel {
 
-    private String TAG = this.getClass().getSimpleName();
     private UsersDao usersDao;
-
-
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
         TodoDatabase todoDatabase = TodoDatabase.getDatabase(application);
         usersDao = todoDatabase.usersDao();
-
-
     }
 
+    // Using AsyncTask
     public void registerUser(Users user) {
         new InsertAsyncTask(usersDao).execute(user);
     }
 
+    /*
+        Operation was performed using AsyncTask.
+        Login results of transactions using EvenBus
+
+     */
     public void getLogin(String u, String p) {
         EventBus.getDefault().post(new EventbusObject(Constants.SHOW_LOADING));
         new LoginAsyncTask(usersDao).execute(u,p);

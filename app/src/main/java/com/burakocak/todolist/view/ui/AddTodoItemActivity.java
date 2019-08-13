@@ -18,18 +18,21 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.Objects;
+
+import static com.burakocak.todolist.utils.Constants.TODO_ITEM_DATE;
+import static com.burakocak.todolist.utils.Constants.TODO_ITEM_DESC;
+import static com.burakocak.todolist.utils.Constants.TODO_ITEM_TITLE;
 
 public class AddTodoItemActivity extends BaseActivity {
 
-    public static final String TODO_ITEM_TITLE ="com.burakocak.todolist.view.ui.TODO_ITEM_TITLE";
-    public static final String TODO_ITEM_DESC = "com.burakocak.todolist.view.ui.TODO_ITEM_DESC";
-    public static final String TODO_ITEM_DATE = "com.burakocak.todolist.view.ui.TODO_ITEM_DATE";
+    private ActivityAddTodoItemBinding binding;
 
-    ActivityAddTodoItemBinding binding;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(AddTodoItemActivity.this,R.layout.activity_add_todo_item);
+        binding = DataBindingUtil.setContentView(AddTodoItemActivity.this, R.layout.activity_add_todo_item);
+
         assert getSupportActionBar() != null;
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close);
         setTitle("Add Todo Item");
@@ -38,27 +41,24 @@ public class AddTodoItemActivity extends BaseActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
-        menuInflater.inflate(R.menu.add_todo,menu);
+        menuInflater.inflate(R.menu.add_todo, menu);
         return true;
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.save_todo:
-                saveTodoItem();
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-
+        if (item.getItemId() == R.id.save_todo) {
+            saveTodoItem();
+            return true;
         }
+        return super.onOptionsItemSelected(item);
 
     }
 
     private void saveTodoItem() {
 
-        String todoItemName = binding.etTodoItemName.getText().toString();
-        String todoItemDesc = binding.etTodoItemDesc.getText().toString();
+        String todoItemName = Objects.requireNonNull(binding.etTodoItemName.getText()).toString();
+        String todoItemDesc = Objects.requireNonNull(binding.etTodoItemDesc.getText()).toString();
         Calendar calendar = Calendar.getInstance();
         calendar.set(binding.itemCompleteDate.getYear(), binding.itemCompleteDate.getMonth(), binding.itemCompleteDate.getDayOfMonth());
         Date date = calendar.getTime();
@@ -66,15 +66,15 @@ public class AddTodoItemActivity extends BaseActivity {
         String todoItemCompleteDate = f.format(date);
 
         if (todoItemName.trim().isEmpty() || todoItemDesc.trim().isEmpty() || todoItemCompleteDate.isEmpty()) {
-            showErrorSneaker("Error!!","Todo name is empty!");
+            showErrorSneaker("Error!!", "Todo name is empty!");
             return;
         }
 
         Intent data = new Intent();
-        data.putExtra(TODO_ITEM_TITLE,todoItemName);
-        data.putExtra(TODO_ITEM_DESC,todoItemDesc);
-        data.putExtra(TODO_ITEM_DATE,todoItemCompleteDate);
-        setResult(RESULT_OK,data);
+        data.putExtra(TODO_ITEM_TITLE, todoItemName);
+        data.putExtra(TODO_ITEM_DESC, todoItemDesc);
+        data.putExtra(TODO_ITEM_DATE, todoItemCompleteDate);
+        setResult(RESULT_OK, data);
         finish();
     }
 

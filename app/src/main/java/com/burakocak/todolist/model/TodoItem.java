@@ -4,9 +4,11 @@ import androidx.annotation.NonNull;
 import androidx.room.ColumnInfo;
 import androidx.room.Entity;
 import androidx.room.ForeignKey;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity(tableName = "todo_items",foreignKeys = @ForeignKey(entity = TodoList.class,parentColumns = "id",childColumns = "todoId",onDelete = ForeignKey.CASCADE))
+@Entity(tableName = "todo_items",foreignKeys = @ForeignKey(entity = TodoList.class,
+        parentColumns = "id",childColumns = "todoId",onDelete = ForeignKey.CASCADE),indices = {@Index("id")})
 public class TodoItem {
 
     @PrimaryKey(autoGenerate = true)

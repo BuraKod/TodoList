@@ -2,12 +2,10 @@ package com.burakocak.todolist.view.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 
 
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.LinearLayoutManager;
 
@@ -21,49 +19,40 @@ import com.burakocak.todolist.viewmodel.MainViewModel;
 
 
 import static com.burakocak.todolist.utils.Constants.ADD_TODO_REQUEST;
+import static com.burakocak.todolist.utils.Constants.TODO_TITLE;
 
-public class MainActivity extends BaseActivity implements TodoListAdapter.OnDeleteButtonClickListener{
+public class MainActivity extends BaseActivity implements TodoListAdapter.OnDeleteButtonClickListener {
 
-    private static final String TAG = "MainActivity";
     private MainViewModel mainViewModel;
     private ActivityMainBinding binding;
     private TodoListAdapter todoListAdapter;
-    String username;
+    private String username;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        binding = DataBindingUtil.setContentView(MainActivity.this,R.layout.activity_main);
+        binding = DataBindingUtil.setContentView(MainActivity.this, R.layout.activity_main);
         mainViewModel = ViewModelProviders.of(MainActivity.this).get(MainViewModel.class);
-        username  = getIntent().getStringExtra("username");
+        username = getIntent().getStringExtra("username");
         mainViewModel.setAllTodo(username);
         mainViewModel.getAllTodo().observe(this, todoLists -> todoListAdapter.setTodo(todoLists));
         init();
-        binding.btnAddTodo.setOnClickListener(clickListener);
 
     }
 
     private void init() {
+        binding.btnAddTodo.setOnClickListener(view ->
+                startActivityForResult(new Intent(MainActivity.this, AddTodoActivity.class), ADD_TODO_REQUEST));
         binding.rvTodoList.setLayoutManager(new LinearLayoutManager(this));
         binding.rvTodoList.setHasFixedSize(true);
-        todoListAdapter  =  new TodoListAdapter(this, this);
+        todoListAdapter = new TodoListAdapter(this, this);
         binding.rvTodoList.setAdapter(todoListAdapter);
     }
 
-    private View.OnClickListener clickListener = new View.OnClickListener() {
 
-        @Override
-        public void onClick(View v) {
-            switch (v.getId()) {
-                case R.id.btn_add_todo:
-                    startActivityForResult(new Intent(MainActivity.this,AddTodoActivity.class),ADD_TODO_REQUEST);
-            }
-        }
-    };
-
-        @Override
+    @Override
     public void onBackPressed() {
-        showExitApplicationDialog("Closing Activity","Are you sure you want to close this activity?");
+        showExitApplicationDialog("Closing Activity", "Are you sure you want to close this activity?");
     }
 
     @Override
@@ -73,15 +62,15 @@ public class MainActivity extends BaseActivity implements TodoListAdapter.OnDele
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        if (requestCode == ADD_TODO_REQUEST && resultCode == RESULT_OK) {
-            String title = data.getStringExtra(AddTodoActivity.TODO_TITLE);
+        if (requestCode == ADD_TODO_REQUEST && resultCode == RESULT_OK && data != null) {
+            String title = data.getStringExtra(TODO_TITLE);
             TodoList todoList = new TodoList();
             todoList.setTitle(title);
             todoList.setUser(username);
             mainViewModel.addTodo(todoList);
-            showSuccessSneaker("Save!","New todo is add to do list");
+            showSuccessSneaker("Save!", "New todo is add to do list");
         } else {
-            showErrorSneaker("Not Save!!","New todo is not saved!!");
+            showErrorSneaker("Not Save!!", "New todo is not saved!!");
         }
     }
 

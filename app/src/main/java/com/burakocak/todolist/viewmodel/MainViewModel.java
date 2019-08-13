@@ -36,14 +36,25 @@ public class MainViewModel extends AndroidViewModel {
     }
 
 
+
     public void addTodo(TodoList todoList) {
         new InsertTodoAsyncTask(todoDao).execute(todoList);
     }
+
+
+
+
+     //Operation was performed using executor method.
 
     public void deleteTodo(TodoList list) {
         executorService.execute(() -> todoDao.delete(list));
     }
 
+
+    /*
+        Operation was performed using AsyncTask.
+        Login results of transactions using EvenBus
+    */
     private static class InsertTodoAsyncTask extends AsyncTask<TodoList, Void, Void> {
         TodoDao todoDao;
 

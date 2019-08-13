@@ -24,8 +24,8 @@ public class TodoListItemAdapter extends RecyclerView.Adapter<TodoListItemAdapte
     private List<TodoItem> todoItemLists;
     private List<TodoItem> filteredTodoItemList;
     private LayoutInflater layoutInflater;
-    private Context context;
     private OnRecyclerItemClickListener onRecyclerItemClickListener;
+    public Context context;
 
 
     public TodoListItemAdapter(Context context, OnRecyclerItemClickListener listener) {
@@ -103,6 +103,7 @@ public class TodoListItemAdapter extends RecyclerView.Adapter<TodoListItemAdapte
             }
 
             @Override
+            @SuppressWarnings("unchecked")
             protected void publishResults(CharSequence constraint, FilterResults results) {
                 filteredTodoItemList = (List<TodoItem>) results.values;
                 notifyDataSetChanged();
